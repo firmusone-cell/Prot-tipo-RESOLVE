@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RESOLVE — Protótipo V2</title>
+<style>
+:root{
+  --bg:#f4f7f6; --card:#fff; --text:#10222a; --muted:#65757c;
+  --green:#0b806d; --green2:#1bb894; --soft:#edf7f3; --line:#dce7e4;
+  --warn:#fff4d8; --blue:#eaf4ff; --danger:#ffe9e7; --shadow:0 16px 42px rgba(15,44,38,.12)
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:linear-gradient(180deg,#eaf2ef,#f7f9f8);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text)}
+button,input,textarea{font:inherit}
+.app{width:min(440px,100%);min-height:100vh;margin:auto;background:#fff;position:relative;box-shadow:var(--shadow);overflow:hidden}
+.screen{display:none;min-height:100vh;padding:22px 18px 92px}
+.screen.active{display:block}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:28px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;display:grid;place-items:center;font-size:26px}
+.iconbtn{border:none;background:transparent;font-size:24px;color:var(--text);cursor:pointer}
+.hero{padding:6px 2px 18px}
+.hero h1{font-size:28px;line-height:1.08;margin:8px 0}
+.hero p{color:var(--muted);line-height:1.45;margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}
+.card.soft{background:var(--soft)}
+.card.warn{background:var(--warn)}
+.card.blue{background:var(--blue)}
+.row{display:flex;align-items:flex-start;gap:12px}
+.ico{width:42px;height:42px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:22px;flex:none}
+h2{font-size:22px;margin:6px 0 14px}
+h3{font-size:17px;margin:0 0 8px}
+.muted{color:var(--muted);font-size:14px;line-height:1.45}
+.btn{width:100%;border:none;border-radius:14px;padding:15px 16px;font-weight:800;cursor:pointer;margin:7px 0}
+.primary{background:linear-gradient(90deg,var(--green),var(--green2));color:white}
+.secondary{background:#eef3f2;color:var(--text);border:1px solid var(--line)}
+.ghost{background:#fff;color:var(--text);border:1px solid var(--line)}
+.scenario{display:flex;align-items:center;gap:13px;cursor:pointer;transition:.15s}
+.scenario:active{transform:scale(.99)}
+.scenario .tag{margin-left:auto;color:var(--muted);font-size:18px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{padding:8px 11px;border-radius:999px;background:#f0f4f3;font-size:12px;color:#425}
+.bottom{position:absolute;left:0;right:0;bottom:0;height:72px;border-top:1px solid var(--line);background:#fff;display:flex;justify-content:space-around;align-items:center}
+.nav{border:none;background:transparent;color:var(--muted);font-size:12px;cursor:pointer}
+.nav b{display:block;font-size:20px;color:var(--text);margin-bottom:2px}
+.camera{height:510px;margin:0 -18px;background:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.22)),linear-gradient(135deg,#8e6b47,#d4bc98 50%,#8d6845);display:grid;place-items:center;position:relative}
+.paper{width:74%;height:68%;background:white;box-shadow:0 8px 24px rgba(0,0,0,.28);padding:26px 20px;transform:rotate(-1deg)}
+.capture{position:absolute;bottom:28px;width:72px;height:72px;border-radius:50%;background:#fff;border:6px solid rgba(255,255,255,.55);box-shadow:0 0 0 2px #111;cursor:pointer}
+.fakebrand{font-size:22px;font-weight:900;margin-bottom:24px}
+.line{height:8px;background:#d8dddd;border-radius:4px;margin:9px 0}.m{width:80%}.s{width:58%}
+.loader{width:92px;height:92px;border:8px solid #d9ebe5;border-top-color:var(--green2);border-radius:50%;animation:spin 1s linear infinite;margin:80px auto 24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.checks{max-width:300px;margin:0 auto}.check{margin:15px 0;color:#345}.check b{color:var(--green2)}
+.action{padding:16px;border:1px solid var(--line);border-radius:15px;margin:10px 0;cursor:pointer}.action.sel{border-color:var(--green2);background:#effaf6}
+.mail{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fbfcfc}
+.mail input{width:100%;border:none;border-bottom:1px solid var(--line);padding:8px 0;background:transparent}
+.mailbody{white-space:pre-wrap;line-height:1.5;font-size:14px;margin-top:12px}
+.badge{display:inline-block;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#fff0c5}
+.case{border:1px solid var(--line);border-radius:16px;padding:15px;margin:11px 0;cursor:pointer}
+.casehead{display:flex;justify-content:space-between;gap:10px}
+.price{border:2px solid var(--line);border-radius:16px;padding:15px;margin:12px 0;cursor:pointer}
+.price.sel{border-color:var(--green2);background:#f1fbf7}
+.price .amount{font-size:24px;font-weight:900}
+.modal{position:fixed;inset:0;background:rgba(8,22,19,.48);display:none;align-items:flex-end;justify-content:center;z-index:10}
+.modal.show{display:flex}
+.sheet{width:min(440px,100%);background:#fff;border-radius:24px 24px 0 0;padding:22px 18px 30px;box-shadow:0 -12px 38px rgba(0,0,0,.15)}
+.small{font-size:12px;color:var(--muted)}
+.success{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:#ddf6eb;color:var(--green);font-size:44px;margin:56px auto 18px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+
+<section id="home" class="screen active">
+  <div class="top">
+    <div class="brand"><div class="logo">✓</div>RESOLVE</div>
+    <button class="iconbtn">☰</button>
+  </div>
+  <div class="hero">
+    <h1>Recebeste algo e não sabes o que fazer?</h1>
+    <p>Mostra-nos. Explicamos em linguagem simples, apresentamos opções e ajudamos no próximo passo.</p>
+  </div>
+  <button class="btn primary" onclick="go('scenarios')">Começar agora →</button>
+  <button class="btn secondary" onclick="go('scenarios')">📷 Fotografar documento</button>
+  <button class="btn secondary" onclick="go('scenarios')">📄 Carregar ficheiro</button>
+  <div class="card soft">
+    <h3>O RESOLVE pode ajudar em</h3>
+    <div class="pills"><span class="pill">Telecomunicações</span><span class="pill">Compras e garantias</span><span class="pill">Faturas</span><span class="pill">Contratos</span><span class="pill">Cobranças</span></div>
+  </div>
+  <div class="small">Protótipo de validação. Não envia dados reais nem executa pagamentos.</div>
+  <div class="bottom">
+    <button class="nav" onclick="go('home')"><b>⌂</b>Início</button>
+    <button class="nav" onclick="go('history')"><b>▣</b>Casos</button>
+    <button class="nav"><b>?</b>Ajuda</button>
+    <button class="nav"><b>○</b>Perfil</button>
+  </div>
+</section>
+
+<section id="scenarios" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('home')">‹</button><b>Escolher situação</b><span></span></div>
+  <h2>Que tipo de situação tens?</h2>
+  <div class="card scenario" onclick="choose('telecom')"><div class="ico">📡</div><div><h3>Telecomunicações</h3><div class="muted">Aumento de mensalidade, alteração de contrato, falha de serviço.</div></div><div class="tag">›</div></div>
+  <div class="card scenario" onclick="choose('produto')"><div class="ico">🛍️</div><div><h3>Produto com problema</h3><div class="muted">Garantia, avaria, troca, devolução, produto defeituoso.</div></div><div class="tag">›</div></div>
+  <div class="card scenario" onclick="choose('cobranca')"><div class="ico">💳</div><div><h3>Cobrança inesperada</h3><div class="muted">Fatura incorreta, valor duplicado ou serviço não contratado.</div></div><div class="tag">›</div></div>
+  <button class="btn ghost" onclick="choose('telecom')">Outro tipo de documento</button>
+</section>
+
+<section id="capture" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('scenarios')">×</button><b id="captureTitle">Fotografar documento</b><span>⚡</span></div>
+  <div class="camera">
+    <div class="paper">
+      <div id="fakeBrand" class="fakebrand">vodafone</div>
+      <b id="docTitle">Alteração de Condições Contratuais</b>
+      <div class="line m"></div><div class="line"></div><div class="line s"></div>
+      <p id="docText" style="font-size:12px;margin-top:24px">A sua mensalidade passará de 39,90 € para 46,90 € a partir de 1 de outubro de 2026.</p>
+      <div class="line"></div><div class="line m"></div><div class="line"></div>
+    </div>
+    <button class="capture" onclick="analyse()"></button>
+  </div>
+  <div class="muted" style="text-align:center;margin-top:14px">Posiciona o documento e toca no botão.</div>
+</section>
+
+<section id="analyse" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('capture')">‹</button><b>A analisar</b><span></span></div>
+  <div class="loader"></div>
+  <div style="text-align:center"><h2>A analisar o teu documento...</h2></div>
+  <div class="checks">
+    <div class="check"><b>✓</b> A ler o conteúdo</div>
+    <div class="check"><b>✓</b> A identificar o problema</div>
+    <div class="check"><b>✓</b> A verificar informação relevante</div>
+    <div class="check">○ A preparar as tuas opções</div>
+  </div>
+  <div class="card soft"><div class="muted">Esta análise é simulada para testar a experiência do produto.</div></div>
+</section>
+
+<section id="result" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('capture')">‹</button><b>Análise concluída</b><span>⇧</span></div>
+  <div class="card soft"><div class="row"><div class="ico">📄</div><div><h3>O que aconteceu?</h3><div id="what" class="muted"></div></div></div></div>
+  <div class="card warn"><div class="row"><div class="ico">💡</div><div><h3>O que significa?</h3><div id="meaning" class="muted"></div></div></div></div>
+  <div class="card"><div class="row"><div class="ico">?</div><div><h3>Precisas de fazer alguma coisa?</h3><div id="need" class="muted"></div></div></div></div>
+  <button class="btn primary" onclick="go('actions')">Ver as minhas opções →</button>
+</section>
+
+<section id="actions" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('result')">‹</button><b>O que queres fazer?</b><span></span></div>
+  <div id="actionList"></div>
+  <div class="card blue"><div class="muted">Em produto real, cada recomendação deverá apresentar a respetiva fonte oficial.</div></div>
+  <button class="btn primary" onclick="go('draft')">Continuar</button>
+</section>
+
+<section id="draft" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('actions')">‹</button><b id="draftTitle">Comunicação preparada</b><span></span></div>
+  <div class="mail">
+    <input id="to" readonly>
+    <input id="subject" readonly>
+    <div id="mailbody" class="mailbody"></div>
+  </div>
+  <div class="card soft"><b>Documento anexo</b><div id="attachment" class="muted"></div></div>
+  <button class="btn primary" onclick="go('pricing')">Continuar →</button>
+</section>
+
+<section id="pricing" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('draft')">‹</button><b>Resolver este caso</b><span>👑</span></div>
+  <p class="muted">Teste de intenção: neste protótipo não existe pagamento real.</p>
+  <div class="price sel" onclick="pickPrice(this,'1,49 €')"><div class="row"><div>◉</div><div><b>Resolver este caso</b><div class="muted">Análise + comunicação pronta + fontes</div></div><div class="amount" style="margin-left:auto">1,49 €</div></div></div>
+  <div class="price" onclick="pickPrice(this,'3,99 €')"><div class="row"><div>○</div><div><b>RESOLVE+</b><div class="muted">Inclui acompanhamento e próximos passos</div></div><div class="amount" style="margin-left:auto">3,99 €</div></div></div>
+  <button class="btn primary" onclick="intent()">Continuar com <span id="chosenPrice">1,49 €</span></button>
+  <div class="small">O clique neste botão serve apenas para medir intenção de compra.</div>
+</section>
+
+<section id="saved" class="screen">
+  <div class="success">✓</div>
+  <div style="text-align:center"><h2>Caso guardado</h2><p class="muted">A tua comunicação está pronta e o caso foi adicionado ao histórico.</p></div>
+  <button class="btn primary" onclick="go('history')">Ver os meus casos</button>
+  <button class="btn secondary" onclick="go('home')">Voltar ao início</button>
+  <div class="card soft"><h3>O que acontece agora?</h3><div class="muted">1. Envia a comunicação.<br>2. Guarda a resposta da empresa.<br>3. Se não resolver, o RESOLVE indica o próximo passo.</div></div>
+</section>
+
+<section id="history" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('home')">‹</button><b>Os meus casos</b><span>＋</span></div>
+  <div id="historyList"></div>
+  <div class="bottom">
+    <button class="nav" onclick="go('home')"><b>⌂</b>Início</button>
+    <button class="nav"><b>▣</b>Casos</button>
+    <button class="nav"><b>?</b>Ajuda</button>
+    <button class="nav"><b>○</b>Perfil</button>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="intentModal">
+  <div class="sheet">
+    <h2>Teste de intenção registado</h2>
+    <p class="muted">Num produto real, este seria o momento de pagamento. Para o protótipo, apenas registamos que escolheste avançar.</p>
+    <button class="btn primary" onclick="confirmSave()">Guardar caso</button>
+    <button class="btn ghost" onclick="closeModal()">Voltar</button>
+  </div>
+</div>
+
+<script>
+const data = {
+  telecom:{
+    brand:'vodafone',
+    docTitle:'Alteração de Condições Contratuais',
+    docText:'A sua mensalidade passará de 39,90 € para 46,90 € a partir de 1 de outubro de 2026.',
+    what:'A operadora está a comunicar um aumento da mensalidade de 39,90 € para 46,90 €.',
+    meaning:'As condições do contrato estão a ser alteradas. Dependendo do contrato e da forma como a alteração foi comunicada, podes ter opções para contestar ou pedir esclarecimentos.',
+    need:'Talvez. Convém perceber as condições aplicáveis antes de aceitar a alteração.',
+    actions:[
+      ['💬','Pedir esclarecimentos','Solicitar informação detalhada à operadora.'],
+      ['📄','Contestar o aumento','Preparar uma reclamação.'],
+      ['✓','Aceitar','Não tomar nenhuma ação neste momento.'],
+      ['⚖️','Ver os meus direitos','Consultar informação oficial relevante.']
+    ],
+    to:'apoio.cliente@operadora.pt',
+    subject:'Contestação de alteração de condições contratuais',
+    attachment:'carta_operadora.jpg',
+    body:`Exmos. Senhores,
+
+Venho por este meio solicitar esclarecimentos e contestar a alteração das condições contratuais comunicada, que prevê um aumento da mensalidade.
+
+Solicito informação detalhada sobre os fundamentos da alteração e as opções disponíveis no meu contrato.
+
+Aguardo a vossa resposta.
+
+Com os melhores cumprimentos,
+[O teu nome]`,
+    history:'Operadora — aumento de mensalidade'
+  },
+  produto:{
+    brand:'Worten',
+    docTitle:'Talão / prova de compra',
+    docText:'Produto adquirido há 8 meses. O auricular esquerdo deixou de funcionar.',
+    what:'Compraste uns auriculares há 8 meses e um dos lados deixou de funcionar.',
+    meaning:'O produto pode ainda estar abrangido pela garantia legal aplicável. A loja poderá ter de avaliar o defeito e propor uma solução adequada.',
+    need:'Sim. Deves contactar o vendedor e apresentar a prova de compra.',
+    actions:[
+      ['🛠️','Pedir reparação','Solicitar avaliação e reparação do produto.'],
+      ['🔁','Pedir substituição','Solicitar substituição se aplicável.'],
+      ['💬','Pedir esclarecimentos','Solicitar resposta formal da loja.'],
+      ['⚖️','Ver os meus direitos','Consultar regras oficiais sobre garantias.']
+    ],
+    to:'apoio.cliente@loja.pt',
+    subject:'Pedido de assistência ao abrigo da garantia',
+    attachment:'fatura_produto.jpg',
+    body:`Exmos. Senhores,
+
+Venho solicitar assistência relativamente ao produto adquirido há cerca de 8 meses, que apresenta uma avaria.
+
+Junto envio a prova de compra e solicito a avaliação do produto e a indicação da solução aplicável ao abrigo da garantia.
+
+Aguardo a vossa resposta.
+
+Com os melhores cumprimentos,
+[O teu nome]`,
+    history:'Loja — produto avariado'
+  },
+  cobranca:{
+    brand:'EDP',
+    docTitle:'Fatura de eletricidade',
+    docText:'Valor total: 120,50 €. Consumo faturado superior ao habitual.',
+    what:'A fatura apresenta um valor significativamente superior ao teu padrão habitual.',
+    meaning:'Pode existir uma leitura estimada, um acerto de consumo ou outro fator. Deves pedir detalhe antes de assumir que o valor está correto.',
+    need:'Sim. Faz sentido pedir esclarecimentos e, se necessário, contestar o valor.',
+    actions:[
+      ['🔎','Pedir detalhe da fatura','Solicitar leituras e cálculo do valor.'],
+      ['📄','Contestar a cobrança','Preparar uma reclamação formal.'],
+      ['💬','Pedir esclarecimentos','Contactar o apoio ao cliente.'],
+      ['⚖️','Ver os meus direitos','Consultar informação oficial sobre faturação.']
+    ],
+    to:'apoio.cliente@energia.pt',
+    subject:'Pedido de esclarecimento sobre faturação',
+    attachment:'fatura_energia.jpg',
+    body:`Exmos. Senhores,
+
+Solicito esclarecimentos relativamente à fatura emitida, cujo valor é significativamente superior ao meu consumo habitual.
+
+Peço, por favor, a discriminação das leituras utilizadas, eventual estimativa ou acerto efetuado e respetivo cálculo.
+
+Aguardo a vossa resposta.
+
+Com os melhores cumprimentos,
+[O teu nome]`,
+    history:'Energia — cobrança inesperada'
+  }
+};
+
+let scenario='telecom', selectedPrice='1,49 €';
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function choose(s){
+  scenario=s; const d=data[s];
+  document.getElementById('fakeBrand').textContent=d.brand;
+  document.getElementById('docTitle').textContent=d.docTitle;
+  document.getElementById('docText').textContent=d.docText;
+  go('capture');
+}
+function analyse(){ go('analyse'); setTimeout(()=>{ renderResult(); go('result'); },1800); }
+function renderResult(){
+  const d=data[scenario];
+  what.textContent=d.what; meaning.textContent=d.meaning; need.textContent=d.need;
+  actionList.innerHTML=d.actions.map((a,i)=>`<div class="action ${i===1?'sel':''}" onclick="selectAction(this)"><b>${a[0]} ${a[1]}</b><div class="muted">${a[2]}</div></div>`).join('');
+  to.value=d.to; subject.value=d.subject; attachment.textContent=d.attachment; mailbody.textContent=d.body;
+}
+function selectAction(el){ document.querySelectorAll('.action').forEach(a=>a.classList.remove('sel')); el.classList.add('sel'); }
+function pickPrice(el,p){
+  document.querySelectorAll('.price').forEach(x=>x.classList.remove('sel')); el.classList.add('sel');
+  selectedPrice=p; document.getElementById('chosenPrice').textContent=p;
+}
+function intent(){ document.getElementById('intentModal').classList.add('show'); }
+function closeModal(){ document.getElementById('intentModal').classList.remove('show'); }
+function confirmSave(){
+  closeModal();
+  let cases=JSON.parse(localStorage.getItem('resolveCases')||'[]');
+  cases.unshift({title:data[scenario].history,status:'A aguardar resposta',price:selectedPrice,date:new Date().toLocaleDateString('pt-PT')});
+  localStorage.setItem('resolveCases',JSON.stringify(cases.slice(0,8)));
+  renderHistory(); go('saved');
+}
+function renderHistory(){
+  let cases=JSON.parse(localStorage.getItem('resolveCases')||'[]');
+  if(!cases.length){
+    cases=[
+      {title:'Operadora — aumento de mensalidade',status:'A aguardar resposta',date:'04/09/2026'},
+      {title:'Loja — produto avariado',status:'Em curso',date:'28/08/2026'},
+      {title:'Energia — fatura incorreta',status:'Resolvido',date:'12/08/2026'}
+    ];
+  }
+  historyList.innerHTML=cases.map(c=>`<div class="case"><div class="casehead"><div><b>${c.title}</b><div class="muted">Atualizado: ${c.date}</div></div><span>›</span></div><p><span class="badge">${c.status}</span></p>${c.price?`<div class="small">Plano escolhido: ${c.price}</div>`:''}</div>`).join('');
+}
+renderHistory();
+</script>
+</body>
+</html>
