@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RESOLVE — Protótipo V2</title>
+<title>RESOLVE — Protótipo V2.2</title>
 <style>
 :root{
   --bg:#f4f7f6; --card:#fff; --text:#10222a; --muted:#65757c;
@@ -68,273 +68,410 @@ h3{font-size:17px;margin:0 0 8px}
 .small{font-size:12px;color:var(--muted)}
 .success{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:#ddf6eb;color:var(--green);font-size:44px;margin:56px auto 18px}
 .hidden{display:none}
+/* V2.2: refinements on the original mobile interface. */
+.app{width:100%;max-width:760px}.screen{min-height:100svh;padding:24px clamp(18px,4vw,38px) 32px}.top{min-height:48px}.hero h1{font-size:clamp(30px,6vw,42px);line-height:1.12;letter-spacing:-1px}.hero p{font-size:17px;margin:18px 0}.hero strong{color:var(--green)}.btn{min-height:52px}.btn:disabled{opacity:.5;cursor:not-allowed}.primary{background:var(--green)}.small{line-height:1.5;color:#52646b}.muted{color:#52646b}.iconbtn{min-width:48px;min-height:48px}.bottom{position:static;margin-top:28px;height:72px;gap:20px}.nav{min-height:48px;flex:1}.camera{height:auto;min-height:320px;margin:16px 0;border-radius:20px;padding:28px 12px}.paper{width:min(100%,380px);height:auto;min-height:250px;transform:rotate(-1deg)}.capture{position:static;width:100%;height:auto;border:0;border-radius:14px;box-shadow:none}.scenario,.action{width:100%;text-align:left;color:var(--text);font:inherit;background:white}.scenario{min-height:104px}.action.sel{box-shadow:inset 4px 0 var(--green)}.action[aria-pressed=true] b:after{content:' ✓';color:var(--green)}:focus-visible{outline:3px solid #155fc4;outline-offset:4px}.mail label{display:block;font-size:13px;font-weight:700}.mail input{font-size:16px;margin-bottom:12px}.mailbody{font-size:16px}.loader{margin:40px auto 24px}.sources a{display:block;padding:12px 0;color:#096553;text-underline-offset:4px;min-height:44px}.badge{background:#e3f3ec;color:#145342}.case{cursor:default}.case summary{cursor:pointer;min-height:48px}.case p{overflow-wrap:anywhere}.price .amount{margin:10px 0}.modal{padding:16px;align-items:center}.sheet{width:min(600px,100%);max-height:90svh;overflow:auto;border-radius:24px;padding:24px}.choices{display:flex;gap:8px;flex-wrap:wrap}.choices label{flex:1;min-width:90px;border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer}.choices label:has(input:checked){background:var(--soft);border-color:var(--green)}fieldset{border:0;padding:0;margin:22px 0}legend{font-weight:750;margin-bottom:12px}select,textarea{width:100%;padding:14px;border:1px solid #81958e;border-radius:12px;background:white;font:inherit;color:var(--text)}textarea{min-height:90px;margin-top:8px}label{line-height:1.5}.notice{padding:12px 18px;background:var(--warn);font-size:14px}.step{font-size:12px;color:var(--green);font-weight:800;letter-spacing:1px;text-transform:uppercase}.success{margin:30px auto}.feedback-done{padding:12px;background:var(--soft);border-radius:12px}.hidden{display:none!important}@media(min-width:800px){body{padding:28px}.app{border:1px solid var(--line);border-radius:28px}.screen{min-height:calc(100svh - 56px)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* V2.2: content-led layout, shared with all steps. */
+html,body{background:#f2f6f4}body{padding:24px 16px}.app{max-width:760px;box-shadow:0 8px 32px #173b3010;border:1px solid var(--line);border-radius:24px}.screen{min-height:0;padding:24px clamp(18px,4vw,36px)}
+.brand{font-size:23px;font-weight:650;letter-spacing:1px}.logo{width:34px;height:34px;font-size:21px;border-radius:10px;background:var(--green)}.hero{padding:4px 0 8px}.hero h1{font-weight:600;font-size:clamp(29px,5vw,40px);line-height:1.18;letter-spacing:-1.2px}.hero strong{font-weight:650}.hero p{margin:16px 0 6px;max-width:560px;line-height:1.6}h2{font-weight:600;line-height:1.25}h3{font-weight:650}.step{letter-spacing:.7px}.btn{font-weight:650}.bottom{margin-top:20px;height:60px}.pills{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:0}.pill{border:1px solid #ccdcd5;background:white;border-radius:12px;padding:14px 12px;color:var(--text);font-size:14px;text-align:left;cursor:pointer;line-height:1.5}.pill span{display:block;font-size:24px;color:var(--green);margin-bottom:6px}.scenario{min-height:88px;padding:14px;margin:10px 0}.scenario:hover,.action:hover,.pill:hover{border-color:var(--green);background:#f2faf6}.primary:hover{background:#096553}.camera{background:#edf2ef;min-height:0;padding:24px}.paper{width:min(100%,450px);min-height:0;border:1px solid #dbe4df;border-radius:3px;box-shadow:0 6px 18px #173b3014;padding:24px;transform:none}.fakebrand{font-weight:650;color:var(--green);font-size:20px;margin-bottom:10px}.document-caption{font-size:11px;color:#52646b;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px}.recommended{border-left:4px solid var(--green);background:#f4faf7}.recommended p{margin-bottom:0}.mailbody{resize:vertical;min-height:300px;line-height:1.6}.price{cursor:default;display:flex;flex-direction:column;margin:0;padding:18px;border-width:1px}.price .amount{font-size:30px;font-weight:650}.price ul{list-style:none;padding:0;line-height:1.5;font-size:14px;margin:0 0 20px}.price li{padding:6px 0 6px 20px;position:relative}.price li:before{content:'✓';position:absolute;left:0;color:var(--green)}.price .btn{margin-top:auto}.plans{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.tertiary{background:transparent;color:#096553;text-decoration:underline;text-underline-offset:4px;width:auto;display:block;margin:12px auto 0}.case summary{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding-right:26px;position:relative;list-style:none}.case summary::-webkit-details-marker{display:none}.case summary:after{content:'+';position:absolute;right:0;font-size:24px;color:var(--green)}.case[open] summary:after{content:'−'}.case-title{font-weight:650;grid-column:1/-1}.case-date{font-size:13px;color:#52646b}.case-meta{display:grid;grid-template-columns:1fr 1fr;gap:18px;border-top:1px solid var(--line);padding-top:20px;margin-top:20px}.case-meta dt{font-size:12px;color:#52646b;margin-bottom:5px}.case-meta dd{margin:0;font-size:14px;font-weight:600}.history-mail{background:#f5f8f6;border:1px solid var(--line);border-radius:12px;padding:18px}.history-subject{font-weight:600}.history-body{white-space:pre-wrap;line-height:1.6;font-size:14px}.screen:focus{outline:none}
+@media(max-width:560px){body{padding:0}.app{border:0;border-radius:0}.screen{padding:20px 18px}.plans{grid-template-columns:1fr}.pills{grid-template-columns:1fr}.pill{display:flex;align-items:center;gap:12px;padding:12px}.pill span{margin:0}.top{gap:8px}.brand{font-size:21px}.top>.small{font-size:11px}.case-meta{grid-template-columns:1fr}.sheet{padding:20px}.camera{padding:18px 12px}}
+.app{min-height:0}.health-safety{border:1px solid #bbd0c8;border-left:4px solid var(--green);border-radius:12px;padding:16px;background:#f0f7f3;margin:16px 0;line-height:1.55;font-size:14px}.health-safety h3{margin-bottom:10px}.health-safety p{margin:8px 0}.health-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}.health-table caption{text-align:left;font-weight:650;padding:12px 0}.health-table th,.health-table td{text-align:left;border-bottom:1px solid var(--line);padding:12px 6px;overflow-wrap:anywhere}.health-table th{font-weight:600}.health-table th:first-child{width:40%}.health-parameter{margin:16px 0}.health-parameter dt{font-size:13px;font-weight:650;margin-top:16px}.health-parameter dd{margin:6px 0;line-height:1.6;font-size:14px}.range-above{background:#fff1d5;color:#704a08}.range-within{background:#edf2f5;color:#314c5b}.health-summary{line-height:1.6}.health-questions{padding-left:22px;line-height:1.7}.health-copy{min-height:240px;resize:vertical;line-height:1.6}.health-document{background:#fbfcfc;border:1px solid var(--line);border-radius:16px;padding:16px}.health-document blockquote{margin:16px 0;padding-left:16px;border-left:3px solid #bbd0c8;line-height:1.6}
+.health-parameter{border:1px solid var(--line);border-radius:14px;padding:0;margin:10px 0;overflow:hidden}.health-parameter h3{margin:0}.health-accordion{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%;border:0;background:#fff;padding:16px;text-align:left;color:var(--text);cursor:pointer}.health-accordion:hover{background:#f4f8f6}.health-parameter-title{flex:1 1 100%;font-size:16px;font-weight:650}.health-expand-label{font-size:12px;color:#52646b;margin-left:auto}.health-accordion[aria-expanded=true] .health-expand-label{font-size:0}.health-accordion[aria-expanded=true] .health-expand-label:after{content:'Fechar detalhes';font-size:12px}.health-accordion:focus-visible{outline-offset:-4px}.health-detail{border-top:1px solid var(--line);padding:4px 16px 12px}.health-parameter h4{font-size:14px;margin:14px 0 6px}.health-parameter p{font-size:14px;line-height:1.55;margin:6px 0 12px}.health-parameter>h4,.health-parameter>p{margin-left:16px;margin-right:16px}.health-questions{font-size:14px;margin:8px 0}.range-within{background:#e3f3ec;color:#145342}#healthResult [hidden]{display:none!important}#healthResult .health-safety{font-size:14px;padding:14px;margin:14px 0}#healthResult .health-safety h3{font-size:15px}#healthResult .health-summary:empty{display:none}#healthCopyPanel{margin:12px 0}#healthFinal p{font-size:14px;line-height:1.5}
+/* Home shortcuts: four columns when roomy, two on mobile, one on narrow screens. */
+#home .pills{grid-template-columns:repeat(2,minmax(0,1fr))}
+#home .pill{display:block;min-width:0;padding:14px 12px;overflow-wrap:anywhere}
+#home .pill span{margin:0 0 6px}
+#home .pill small{display:block;font-size:12px;line-height:1.45;color:#52646b;margin-top:6px}
+@media(min-width:720px){#home .pills{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:340px){#home .pills{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
-<div class="app">
+<div id="storageNotice" class="notice hidden" role="status"></div><main class="app">
 
-<section id="home" class="screen active">
-  <div class="top">
-    <div class="brand"><div class="logo">✓</div>RESOLVE</div>
-    <button class="iconbtn">☰</button>
-  </div>
-  <div class="hero">
-    <h1>Recebeste algo e não sabes o que fazer?</h1>
-    <p>Mostra-nos. Explicamos em linguagem simples, apresentamos opções e ajudamos no próximo passo.</p>
-  </div>
-  <button class="btn primary" onclick="go('scenarios')">Começar agora →</button>
-  <button class="btn secondary" onclick="go('scenarios')">📷 Fotografar documento</button>
-  <button class="btn secondary" onclick="go('scenarios')">📄 Carregar ficheiro</button>
-  <div class="card soft">
-    <h3>O RESOLVE pode ajudar em</h3>
-    <div class="pills"><span class="pill">Telecomunicações</span><span class="pill">Compras e garantias</span><span class="pill">Faturas</span><span class="pill">Contratos</span><span class="pill">Cobranças</span></div>
-  </div>
-  <div class="small">Protótipo de validação. Não envia dados reais nem executa pagamentos.</div>
-  <div class="bottom">
-    <button class="nav" onclick="go('home')"><b>⌂</b>Início</button>
-    <button class="nav" onclick="go('history')"><b>▣</b>Casos</button>
-    <button class="nav"><b>?</b>Ajuda</button>
-    <button class="nav"><b>○</b>Perfil</button>
-  </div>
-</section>
+<section id="home" class="screen active"><div class="top"><div class="brand"><div class="logo" aria-hidden="true">✓</div>RESOLVE</div><span class="small">Demonstração · V2.2</span></div><div class="hero"><span class="step">O teu próximo passo, mais claro</span><h1>Recebeste algo e não sabes o que fazer?<br><strong>Mostra-nos.</strong></h1><p>Uma explicação simples, opções para responder e um próximo passo mais claro. Experimenta com um exemplo, sem upload real.</p></div><button class="btn primary" onclick="startPrototype()">Experimentar grátis →</button><p class="small">Vais experimentar com um documento de exemplo. Não precisas de enviar dados pessoais.</p><div class="card soft"><h3>Uma ajuda para situações do dia a dia</h3><div class="pills"><button class="pill" onclick="startExample('cobranca')"><span aria-hidden="true">▤</span> Fatura inesperada →</button><button class="pill" onclick="startExample('produto')"><span aria-hidden="true">◇</span> Produto com problema →</button><button class="pill" onclick="startExample('telecom')"><span aria-hidden="true">↻</span> Alteração de contrato →</button><button class="pill" type="button" onclick="chooseHealth();trackEvent('home_health_clicked')"><span aria-hidden="true">✚</span> Saúde<small>Perceber análises e relatórios médicos</small></button></div></div><p class="small">Protótipo de demonstração — não envies dados pessoais reais.</p><nav class="bottom" aria-label="Navegação principal"><button class="nav" onclick="go('home')">Início</button><button class="nav" onclick="go('history')">O meu caso</button></nav></section>
 
 <section id="scenarios" class="screen">
   <div class="top"><button class="iconbtn" onclick="go('home')">‹</button><b>Escolher situação</b><span></span></div>
   <h2>Que tipo de situação tens?</h2>
-  <div class="card scenario" onclick="choose('telecom')"><div class="ico">📡</div><div><h3>Telecomunicações</h3><div class="muted">Aumento de mensalidade, alteração de contrato, falha de serviço.</div></div><div class="tag">›</div></div>
-  <div class="card scenario" onclick="choose('produto')"><div class="ico">🛍️</div><div><h3>Produto com problema</h3><div class="muted">Garantia, avaria, troca, devolução, produto defeituoso.</div></div><div class="tag">›</div></div>
-  <div class="card scenario" onclick="choose('cobranca')"><div class="ico">💳</div><div><h3>Cobrança inesperada</h3><div class="muted">Fatura incorreta, valor duplicado ou serviço não contratado.</div></div><div class="tag">›</div></div>
-  <button class="btn ghost" onclick="choose('telecom')">Outro tipo de documento</button>
+  <button class="card scenario" onclick="choose('telecom')"><div class="ico">📡</div><div><h3>Telecomunicações</h3><div class="muted">Aumento de mensalidade, alteração de contrato, falha de serviço.</div></div><div class="tag" aria-hidden="true">›</div></button>
+  <button class="card scenario" onclick="choose('produto')"><div class="ico">🛍️</div><div><h3>Produto com problema</h3><div class="muted">Garantia, avaria, troca, devolução, produto defeituoso.</div></div><div class="tag" aria-hidden="true">›</div></button>
+  <button class="card scenario" onclick="choose('cobranca')"><div class="ico">💳</div><div><h3>Cobrança inesperada</h3><div class="muted">Fatura incorreta, valor duplicado ou serviço não contratado.</div></div><div class="tag" aria-hidden="true">›</div></button>
+  <button class="card scenario" onclick="chooseHealth()"><span class="ico" aria-hidden="true">✚</span><span><strong>Saúde</strong><span class="muted" style="display:block">Perceber análises, exames e relatórios médicos.</span></span><span class="tag" aria-hidden="true">›</span></button>
+  <p class="small">Escolhe um exemplo. Não precisas de carregar nenhum ficheiro.</p>
 </section>
 
 <section id="capture" class="screen">
-  <div class="top"><button class="iconbtn" onclick="go('scenarios')">×</button><b id="captureTitle">Fotografar documento</b><span>⚡</span></div>
+  <div class="top"><button class="iconbtn" onclick="go('scenarios')">×</button><b id="captureTitle">Documento de exemplo</b><span></span></div>
   <div class="camera">
     <div class="paper">
-      <div id="fakeBrand" class="fakebrand">vodafone</div>
-      <b id="docTitle">Alteração de Condições Contratuais</b>
+      <div id="fakeBrand" class="fakebrand">Operadora</div>
+      <p class="document-caption">Documento de exemplo · referência DEMO-2026</p><b id="docTitle">Alteração de Condições Contratuais</b>
       <div class="line m"></div><div class="line"></div><div class="line s"></div>
       <p id="docText" style="font-size:12px;margin-top:24px">A sua mensalidade passará de 39,90 € para 46,90 € a partir de 1 de outubro de 2026.</p>
       <div class="line"></div><div class="line m"></div><div class="line"></div>
     </div>
-    <button class="capture" onclick="analyse()"></button>
+    
   </div>
-  <div class="muted" style="text-align:center;margin-top:14px">Posiciona o documento e toca no botão.</div>
+  <p class="small">Não envies documentos reais com dados pessoais neste protótipo.</p><button class="btn primary" onclick="analyse()">Analisar este exemplo →</button>
 </section>
 
 <section id="analyse" class="screen">
   <div class="top"><button class="iconbtn" onclick="go('capture')">‹</button><b>A analisar</b><span></span></div>
   <div class="loader"></div>
   <div style="text-align:center"><h2>A analisar o teu documento...</h2></div>
-  <div class="checks">
-    <div class="check"><b>✓</b> A ler o conteúdo</div>
-    <div class="check"><b>✓</b> A identificar o problema</div>
-    <div class="check"><b>✓</b> A verificar informação relevante</div>
-    <div class="check">○ A preparar as tuas opções</div>
-  </div>
+  <div class="checks" aria-live="polite"><p id="analysisStep">A ler o documento…</p></div>
   <div class="card soft"><div class="muted">Esta análise é simulada para testar a experiência do produto.</div></div>
 </section>
 
 <section id="result" class="screen">
-  <div class="top"><button class="iconbtn" onclick="go('capture')">‹</button><b>Análise concluída</b><span>⇧</span></div>
-  <div class="card soft"><div class="row"><div class="ico">📄</div><div><h3>O que aconteceu?</h3><div id="what" class="muted"></div></div></div></div>
-  <div class="card warn"><div class="row"><div class="ico">💡</div><div><h3>O que significa?</h3><div id="meaning" class="muted"></div></div></div></div>
-  <div class="card"><div class="row"><div class="ico">?</div><div><h3>Precisas de fazer alguma coisa?</h3><div id="need" class="muted"></div></div></div></div>
-  <button class="btn primary" onclick="go('actions')">Ver as minhas opções →</button>
+  <div class="top"><button class="iconbtn" onclick="go('capture')">‹</button><b>Análise concluída</b><span></span></div>
+  <div class="card soft"><div class="row"><div class="ico">📄</div><div><h3>O que aconteceu</h3><div id="what" class="muted"></div></div></div></div>
+  <div class="card warn"><div class="row"><div class="ico">💡</div><div><h3>O que isto significa</h3><div id="meaning" class="muted"></div></div></div></div>
+  <div class="card"><div class="row"><div class="ico">?</div><div><h3>Precisas de agir?</h3><div id="need" class="muted"></div></div></div></div>
+  <div class="card recommended"><h3>Próximo passo recomendado</h3><p id="nextStep" class="muted"></p></div><div class="card sources"><h3>Informação relevante</h3><p class="muted">Com base neste cenário, poderá fazer sentido consultar estas fontes antes de decidir.</p><h3>Fontes úteis</h3><div id="sourceList"></div></div><button class="btn primary" onclick="go('actions')">Ver as minhas opções →</button>
 </section>
 
 <section id="actions" class="screen">
   <div class="top"><button class="iconbtn" onclick="go('result')">‹</button><b>O que queres fazer?</b><span></span></div>
   <div id="actionList"></div>
-  <div class="card blue"><div class="muted">Em produto real, cada recomendação deverá apresentar a respetiva fonte oficial.</div></div>
-  <button class="btn primary" onclick="go('draft')">Continuar</button>
+  <p class="small">Escolhe o próximo passo que faz sentido para ti.</p>
+  <button class="btn primary" id="actionContinue" onclick="showCommunication()" disabled>Preparar comunicação</button>
 </section>
 
 <section id="draft" class="screen">
   <div class="top"><button class="iconbtn" onclick="go('actions')">‹</button><b id="draftTitle">Comunicação preparada</b><span></span></div>
   <div class="mail">
-    <input id="to" readonly>
-    <input id="subject" readonly>
-    <div id="mailbody" class="mailbody"></div>
+    <label for="to">Destinatário de exemplo — confirma o contacto real</label><input id="to" readonly>
+    <label for="subject">Assunto</label><input id="subject" readonly>
+    <label for="mailbody">Corpo da comunicação — podes editar</label><textarea id="mailbody" class="mailbody" rows="12" aria-describedby="nameHelp" oninput="editCommunication()" spellcheck="true"></textarea><p id="nameHelp" class="small">Substitui [O teu nome] antes de usar o texto num caso real. Neste protótipo, usa apenas dados fictícios.</p>
   </div>
-  <div class="card soft"><b>Documento anexo</b><div id="attachment" class="muted"></div></div>
+  <p class="small">Texto de exemplo. Revê e adapta antes de usar. Não existe envio nem anexo real.</p><button id="copyButton" class="btn secondary" onclick="copyCommunication()">Copiar texto</button><p id="copyStatus" role="status"></p>
   <button class="btn primary" onclick="go('pricing')">Continuar →</button>
 </section>
 
-<section id="pricing" class="screen">
-  <div class="top"><button class="iconbtn" onclick="go('draft')">‹</button><b>Resolver este caso</b><span>👑</span></div>
-  <p class="muted">Teste de intenção: neste protótipo não existe pagamento real.</p>
-  <div class="price sel" onclick="pickPrice(this,'1,49 €')"><div class="row"><div>◉</div><div><b>Resolver este caso</b><div class="muted">Análise + comunicação pronta + fontes</div></div><div class="amount" style="margin-left:auto">1,49 €</div></div></div>
-  <div class="price" onclick="pickPrice(this,'3,99 €')"><div class="row"><div>○</div><div><b>RESOLVE+</b><div class="muted">Inclui acompanhamento e próximos passos</div></div><div class="amount" style="margin-left:auto">3,99 €</div></div></div>
-  <button class="btn primary" onclick="intent()">Continuar com <span id="chosenPrice">1,49 €</span></button>
-  <div class="small">O clique neste botão serve apenas para medir intenção de compra.</div>
-</section>
+<section id="pricing" class="screen"><div class="top"><button class="iconbtn" onclick="go('draft')">‹</button><b>O próximo passo</b></div><h2>Queres usar o RESOLVE num caso real?</h2><p class="muted">Esta demonstração usou um exemplo. Estamos a testar quanto valor teria o RESOLVE com os teus próprios documentos.</p>
+<div class="plans"><div class="price"><h3>RESOLVE</h3><div class="amount">1,49 €</div><p>Analisa o teu caso real</p><ul><li>Explicação simples do teu documento</li><li>Próximo passo recomendado</li><li>Resposta personalizada pronta a usar</li></ul><button class="btn primary" onclick="intent('1,49 €')">Resolver um caso real — 1,49 €</button></div>
+<div class="price"><h3>RESOLVE+</h3><div class="amount">3,99 €</div><p>Ajuda durante o processo</p><ul><li>Tudo do RESOLVE</li><li>Ajuda a interpretar a resposta da empresa</li><li>Sugere o próximo passo</li><li>Mantém o caso organizado</li></ul><button class="btn primary" onclick="intent('3,99 €')">Quero acompanhamento — 3,99 €</button></div></div><p class="small">Propostas futuras: análise de documentos reais e acompanhamento ainda não estão disponíveis. Não existe pagamento real nesta demonstração.</p><button class="btn tertiary" onclick="confirmSave()">Guardar apenas o exemplo</button></section>
 
 <section id="saved" class="screen">
   <div class="success">✓</div>
   <div style="text-align:center"><h2>Caso guardado</h2><p class="muted">A tua comunicação está pronta e o caso foi adicionado ao histórico.</p></div>
   <button class="btn primary" onclick="go('history')">Ver os meus casos</button>
   <button class="btn secondary" onclick="go('home')">Voltar ao início</button>
-  <div class="card soft"><h3>O que acontece agora?</h3><div class="muted">1. Envia a comunicação.<br>2. Guarda a resposta da empresa.<br>3. Se não resolver, o RESOLVE indica o próximo passo.</div></div>
+  <div class="card soft"><h3>O que acontece agora?</h3><div class="muted">A comunicação não foi enviada. Num caso real, revê o texto e confirma o contacto da empresa antes de o utilizares. O acompanhamento ainda não está disponível.</div></div>
 </section>
 
 <section id="history" class="screen">
-  <div class="top"><button class="iconbtn" onclick="go('home')">‹</button><b>Os meus casos</b><span>＋</span></div>
+  <div class="top"><button class="iconbtn" onclick="go('home')">‹</button><b>O meu caso</b><button class="iconbtn" aria-label="Experimentar outro caso" onclick="go('scenarios')">＋</button></div>
   <div id="historyList"></div>
-  <div class="bottom">
-    <button class="nav" onclick="go('home')"><b>⌂</b>Início</button>
-    <button class="nav"><b>▣</b>Casos</button>
-    <button class="nav"><b>?</b>Ajuda</button>
-    <button class="nav"><b>○</b>Perfil</button>
-  </div>
+  <nav class="bottom" aria-label="Navegação principal"><button class="nav" onclick="go('home')">Início</button><button class="nav" onclick="go('history')">O meu caso</button></nav>
 </section>
 
-</div>
+<section id="health" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('scenarios')">‹</button><b>Saúde · demonstração</b></div>
+  <h2>Percebe os teus resultados sem linguagem médica complicada.</h2>
+  <p class="muted">O RESOLVE ajuda a compreender informação médica, mas não faz diagnósticos nem substitui um profissional de saúde.</p>
+  <div class="card warn"><h3>Usa apenas os exemplos</h3><p>Não utilizes exames médicos reais neste protótipo.</p><p class="muted">Não existe upload nem análise real. Não introduzas nomes, números de utente, datas de nascimento ou outros dados clínicos. Só podes guardar um resumo fictício desta demonstração no navegador.</p></div>
+  <div id="healthIntroSafety" class="health-safety"></div>
+  <button class="card scenario" onclick="chooseHealthExample('laboratorio')"><span class="ico" aria-hidden="true">▤</span><span><strong>Análises laboratoriais</strong><span class="muted" style="display:block">Análises de rotina fictícias · três parâmetros</span></span><span class="tag" aria-hidden="true">›</span></button>
+  <button class="card scenario" onclick="go('healthTerms')"><span class="ico" aria-hidden="true">Aa</span><span><strong>Termos de relatórios</strong><span class="muted" style="display:block">Duas frases fictícias de exames, em linguagem simples</span></span><span class="tag" aria-hidden="true">›</span></button>
+</section>
+<section id="healthTerms" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('health')">‹</button><b>Termos de relatórios</b></div>
+  <h2>Escolhe uma frase de exemplo</h2><p class="muted">São excertos fictícios de exames diferentes. Nenhum descreve a tua saúde.</p>
+  <button class="btn secondary" onclick="chooseHealthExample('pleural')">Sem sinais de derrame pleural.</button>
+  <button class="btn secondary" onclick="chooseHealthExample('esteatose')">Esteatose hepática ligeira.</button>
+</section>
+<section id="healthPreview" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('health')">‹</button><b>Documento de exemplo</b></div>
+  <h2 id="healthDocumentTitle"></h2><p class="muted">Exemplo inteiramente fictício. Não utilizes exames médicos reais neste protótipo.</p>
+  <div id="healthDocument" class="health-document"></div>
+  <p id="healthReferenceNote" class="muted"></p>
+  <div id="healthBeforeSafety" class="health-safety"></div>
+  <button class="btn primary" onclick="analyseHealth()">Analisar este exemplo →</button>
+</section>
+<section id="healthAnalysis" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('healthPreview')">‹</button><b>Explicação simulada</b></div>
+  <div class="loader" aria-hidden="true"></div><h2>A preparar a explicação do exemplo…</h2>
+  <p id="healthAnalysisStep" role="status">A ler o exemplo fictício…</p>
+  <p class="muted">Sem IA, avaliação clínica ou análise de documentos reais.</p>
+</section>
+<section id="healthResult" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('healthPreview')">‹</button><b>Saúde · explicação do exemplo</b></div>
+  <h2 id="healthResultTitle">Resumo das análises</h2><p id="healthSummary" class="health-summary"></p>
+  <div id="healthParameters"></div>
+  <div id="healthResultSafety" class="health-safety"></div>
+  <p id="healthResultReference" class="muted"></p>
+  <p id="healthUrgency" class="muted"></p>
+  <div id="healthFinal" class="card recommended"><h3>Resumo final</h3><p id="healthFinalSummary"></p><h3>Próximo passo</h3><p id="healthFinalStep"></p><p class="muted">Confirma esta informação com um profissional de saúde.</p></div>
+  <button id="healthCopyToggle" class="btn secondary" aria-expanded="false" aria-controls="healthCopyPanel" onclick="toggleHealthPanel(this)">Ver texto completo</button>
+  <div id="healthCopyPanel" hidden><label for="healthCopyText"><b>Explicação completa para copiar — apenas o exemplo fictício</b></label>
+  <textarea id="healthCopyText" class="health-copy" rows="10" readonly aria-describedby="healthCopyHelp"></textarea>
+  <p id="healthCopyHelp" class="small">O texto inclui as salvaguardas. Não há envio ou exportação de ficheiros médicos. Não é possível introduzir dados pessoais nesta área.</p>
+  </div><button id="healthCopyButton" class="btn secondary" onclick="copyHealthSummary()">Copiar explicação</button><p id="healthCopyStatus" role="status"></p>
+  <button class="btn primary" onclick="saveHealthExample()">Guardar resumo do exemplo</button>
+  <button class="btn tertiary" onclick="go('health')">Experimentar outro exemplo de Saúde</button>
+</section>
+<section id="healthSaved" class="screen">
+  <div class="top"><button class="iconbtn" onclick="go('healthResult')">‹</button><b>Exemplo guardado</b></div>
+  <h2>Resumo fictício guardado</h2><p>Fica apenas neste navegador. Nenhum documento médico foi guardado ou enviado.</p>
+  <div id="healthSavedSafety" class="health-safety"></div>
+  <button class="btn primary" onclick="go('history')">Ver os meus casos</button><button class="btn secondary" onclick="go('home')">Voltar ao início</button>
+</section>
+</main>
 
-<div class="modal" id="intentModal">
-  <div class="sheet">
-    <h2>Teste de intenção registado</h2>
-    <p class="muted">Num produto real, este seria o momento de pagamento. Para o protótipo, apenas registamos que escolheste avançar.</p>
-    <button class="btn primary" onclick="confirmSave()">Guardar caso</button>
-    <button class="btn ghost" onclick="closeModal()">Voltar</button>
-  </div>
-</div>
-
+<div class="modal" id="intentModal" role="dialog" aria-modal="true" aria-labelledby="intentTitle" tabindex="-1"><div class="sheet">
+<button class="iconbtn" aria-label="Fechar" onclick="closeModal()" style="float:right">×</button><h2 id="intentTitle">A tua opinião conta</h2><p id="intentIntro" class="muted">Estamos a testar o RESOLVE antes do lançamento.</p><p class="small">Não foi efetuado qualquer pagamento. As respostas ficam apenas neste navegador.</p>
+<form id="feedbackForm" onsubmit="submitFeedback(event)"><fieldset><legend>Pagarias <span id="intentPrice"></span> para resolver um problema real desta forma?</legend><div class="choices"><label><input type="radio" name="paymentIntent" value="yes" required onchange="selectIntent(this.value)"> Sim</label><label><input type="radio" name="paymentIntent" value="maybe" onchange="selectIntent(this.value)"> Talvez</label><label><input type="radio" name="paymentIntent" value="no" onchange="selectIntent(this.value)"> Não</label></div></fieldset>
+<label for="reason"><b>O que te faria usar o RESOLVE?</b></label><select id="reason" required><option value="">Seleciona um motivo</option><option>Poupar tempo</option><option>Perceber os meus direitos</option><option>Não saber o que responder</option><option>Evitar telefonemas</option><option>Ter ajuda até ao fim</option><option>Outro</option></select>
+<p><label for="comment">Queres deixar algum comentário? <span class="small">(opcional)</span></label><textarea id="comment" maxlength="200" aria-describedby="commentHelp commentCount" oninput="updateCounter()"></textarea><span id="commentCount" class="small">0/200</span><br><span id="commentHelp" class="small">Não incluas nomes, contactos ou outros dados pessoais. O comentário fica apenas neste navegador.</span></p><button class="btn primary" type="submit">Enviar feedback</button></form>
+<div id="feedbackDone" class="hidden" role="status"><p class="feedback-done">Queres guardar este caso de demonstração?</p><button class="btn primary" onclick="confirmSave()">Guardar caso</button></div></div></div>
 <script>
 const data = {
   telecom:{
-    brand:'vodafone',
+    brand:'Operadora',
     docTitle:'Alteração de Condições Contratuais',
     docText:'A sua mensalidade passará de 39,90 € para 46,90 € a partir de 1 de outubro de 2026.',
     what:'A operadora está a comunicar um aumento da mensalidade de 39,90 € para 46,90 €.',
     meaning:'As condições do contrato estão a ser alteradas. Dependendo do contrato e da forma como a alteração foi comunicada, podes ter opções para contestar ou pedir esclarecimentos.',
-    need:'Talvez. Convém perceber as condições aplicáveis antes de aceitar a alteração.',
-    actions:[
-      ['💬','Pedir esclarecimentos','Solicitar informação detalhada à operadora.'],
-      ['📄','Contestar o aumento','Preparar uma reclamação.'],
-      ['✓','Aceitar','Não tomar nenhuma ação neste momento.'],
-      ['⚖️','Ver os meus direitos','Consultar informação oficial relevante.']
-    ],
-    to:'apoio.cliente@operadora.pt',
-    subject:'Contestação de alteração de condições contratuais',
-    attachment:'carta_operadora.jpg',
-    body:`Exmos. Senhores,
-
-Venho por este meio solicitar esclarecimentos e contestar a alteração das condições contratuais comunicada, que prevê um aumento da mensalidade.
-
-Solicito informação detalhada sobre os fundamentos da alteração e as opções disponíveis no meu contrato.
-
-Aguardo a vossa resposta.
-
-Com os melhores cumprimentos,
-[O teu nome]`,
+    need:'Convém verificar antes de aceitar a alteração.',
+    next:'Com base neste exemplo, confirma primeiro as condições do teu contrato e a forma como a alteração foi comunicada. Depois podes pedir esclarecimentos ou contestar. Confirma nas fontes oficiais.',
+    to:'apoio@operadora.example',
     history:'Operadora — aumento de mensalidade'
   },
   produto:{
-    brand:'Worten',
+    brand:'Loja Exemplo',
     docTitle:'Talão / prova de compra',
     docText:'Produto adquirido há 8 meses. O auricular esquerdo deixou de funcionar.',
     what:'Compraste uns auriculares há 8 meses e um dos lados deixou de funcionar.',
     meaning:'O produto pode ainda estar abrangido pela garantia legal aplicável. A loja poderá ter de avaliar o defeito e propor uma solução adequada.',
-    need:'Sim. Deves contactar o vendedor e apresentar a prova de compra.',
-    actions:[
-      ['🛠️','Pedir reparação','Solicitar avaliação e reparação do produto.'],
-      ['🔁','Pedir substituição','Solicitar substituição se aplicável.'],
-      ['💬','Pedir esclarecimentos','Solicitar resposta formal da loja.'],
-      ['⚖️','Ver os meus direitos','Consultar regras oficiais sobre garantias.']
-    ],
-    to:'apoio.cliente@loja.pt',
-    subject:'Pedido de assistência ao abrigo da garantia',
-    attachment:'fatura_produto.jpg',
-    body:`Exmos. Senhores,
-
-Venho solicitar assistência relativamente ao produto adquirido há cerca de 8 meses, que apresenta uma avaria.
-
-Junto envio a prova de compra e solicito a avaliação do produto e a indicação da solução aplicável ao abrigo da garantia.
-
-Aguardo a vossa resposta.
-
-Com os melhores cumprimentos,
-[O teu nome]`,
+    need:'Pode fazer sentido contactar o vendedor com a prova de compra.',
+    next:'Reúne a prova de compra e descreve a avaria. Confirma nas fontes oficiais as condições aplicáveis antes de pedir uma solução ao vendedor.',
+    to:'apoio@loja.example',
     history:'Loja — produto avariado'
   },
   cobranca:{
-    brand:'EDP',
+    brand:'Energia Exemplo',
     docTitle:'Fatura de eletricidade',
     docText:'Valor total: 120,50 €. Consumo faturado superior ao habitual.',
     what:'A fatura apresenta um valor significativamente superior ao teu padrão habitual.',
     meaning:'Pode existir uma leitura estimada, um acerto de consumo ou outro fator. Deves pedir detalhe antes de assumir que o valor está correto.',
-    need:'Sim. Faz sentido pedir esclarecimentos e, se necessário, contestar o valor.',
-    actions:[
-      ['🔎','Pedir detalhe da fatura','Solicitar leituras e cálculo do valor.'],
-      ['📄','Contestar a cobrança','Preparar uma reclamação formal.'],
-      ['💬','Pedir esclarecimentos','Contactar o apoio ao cliente.'],
-      ['⚖️','Ver os meus direitos','Consultar informação oficial sobre faturação.']
-    ],
-    to:'apoio.cliente@energia.pt',
-    subject:'Pedido de esclarecimento sobre faturação',
-    attachment:'fatura_energia.jpg',
-    body:`Exmos. Senhores,
-
-Solicito esclarecimentos relativamente à fatura emitida, cujo valor é significativamente superior ao meu consumo habitual.
-
-Peço, por favor, a discriminação das leituras utilizadas, eventual estimativa ou acerto efetuado e respetivo cálculo.
-
-Aguardo a vossa resposta.
-
-Com os melhores cumprimentos,
-[O teu nome]`,
+    need:'Faz sentido pedir esclarecimentos e, se necessário, contestar o valor.',
+    next:'Compara as leituras, o período faturado e eventuais acertos. Se o valor continuar por explicar, pede o detalhe à empresa. Confirma nas fontes oficiais.',
+    to:'apoio@energia.example',
     history:'Energia — cobrança inesperada'
   }
 };
 
-let scenario='telecom', selectedPrice='1,49 €';
-
+const $ = id => document.getElementById(id);
+const state = {scenario:'telecom', action:null, price:null, intention:null, saved:false, draft:null};
+const memory = new Map();
+let storageAvailable = true, timers = [], modalTrigger = null;
+const keys = {events:'resolveEventsV21', feedback:'resolveFeedbackV21', cases:'resolveCasesV21'};
+function storageWarning(){ storageAvailable=false; $('storageNotice').textContent='O armazenamento local está indisponível ou contém dados inválidos. Podes continuar, mas alguns dados ficam apenas nesta sessão.'; $('storageNotice').classList.remove('hidden'); }
+function readList(key){
+  if(!storageAvailable) return memory.get(key)||[];
+  try { const raw=localStorage.getItem(key); const value=raw?JSON.parse(raw):[]; if(!Array.isArray(value)) throw Error('invalid'); memory.set(key,value); return value; }
+  catch {storageWarning(); return memory.get(key)||[];}
+}
+function writeList(key,value){ memory.set(key,value); if(!storageAvailable)return; try{localStorage.setItem(key,JSON.stringify(value));}catch{storageWarning();} }
+// Only structured prototype metadata enters the event log; comments remain separate.
+function trackEvent(eventName,details={}){
+  const metadata={scenario:state.scenario,action:state.action,price:state.price};
+  for(const key of ['intention','reason','hasComment']) if(key in details) metadata[key]=details[key];
+  const entry={event:eventName,data:metadata,timestamp:new Date().toISOString()};
+  console.info('[RESOLVE]',entry); writeList(keys.events,[...readList(keys.events),entry].slice(-500));
+}
+const actionVariants={
+ telecom:[
+ {label:'Pedir esclarecimentos',description:'Perceber a alteração e as opções do contrato.',subject:'Pedido de esclarecimentos sobre a mensalidade',text:'Solicito esclarecimentos sobre a alteração da mensalidade de 39,90 € para 46,90 €, prevista para 1 de outubro de 2026. Agradeço informação sobre os fundamentos desta alteração e as opções previstas no meu contrato.'},
+ {label:'Contestar o aumento',description:'Pedir a revisão da alteração comunicada.',subject:'Contestação do aumento da mensalidade',text:'Venho contestar o aumento da mensalidade de 39,90 € para 46,90 €. Solicito a revisão desta alteração e uma resposta escrita com os respetivos fundamentos e as opções disponíveis no meu contrato.'}],
+ produto:[
+ {label:'Pedir reparação/substituição',description:'Pedir avaliação da avaria e uma solução adequada.',subject:'Pedido de reparação ou substituição de auriculares',text:'Os auriculares que adquiri há cerca de 8 meses apresentam uma avaria: o lado esquerdo deixou de funcionar. Solicito a avaliação do produto e, se aplicável, a reparação ou substituição ao abrigo da garantia. Agradeço indicação de como apresentar a prova de compra e entregar o produto.'},
+ {label:'Pedir esclarecimento ao vendedor',description:'Saber como apresentar a avaria e quais as opções.',subject:'Pedido de esclarecimento sobre avaria de auriculares',text:'Os auriculares adquiridos há cerca de 8 meses deixaram de funcionar do lado esquerdo. Agradeço esclarecimentos sobre o procedimento de avaliação, os documentos necessários e as opções que poderão ser aplicáveis. Nesta fase, pretendo compreender os passos a seguir.'}],
+ cobranca:[
+ {label:'Pedir explicação da cobrança',description:'Verificar leituras e o cálculo da fatura.',subject:'Pedido de detalhe da fatura de 120,50 €',text:'Solicito o detalhe da fatura de eletricidade no valor de 120,50 €, superior ao habitual. Agradeço a indicação das leituras utilizadas, do período faturado e de eventuais estimativas ou acertos de consumo.'},
+ {label:'Contestar a cobrança',description:'Pedir verificação e eventual correção.',subject:'Pedido de revisão da fatura de 120,50 €',text:'Venho contestar o valor de 120,50 € apresentado na fatura de eletricidade, por ser superior ao habitual. Solicito a verificação dos valores e das leituras utilizadas e, caso exista algum erro, a respetiva correção. Agradeço uma resposta escrita.'}]
+};
+const officialSources={
+ telecom:[['ANACOM — Portal do Consumidor','https://www.anacom-consumidor.pt/']],
+ produto:[['gov.pt — Garantia de produtos comprados em Portugal','https://www.gov.pt/guias/garantia-de-produtos-comprados-em-portugal']],
+ cobranca:[['ERSE — Compreender a fatura','https://www.erse.pt/consumidores-de-energia/eletricidade/compreender-a-fatura/']]
+};
+// Fixed teaching examples only. No clinical input, thresholds engine or diagnosis.
+const healthSafety='Esta interpretação é apenas informativa e não é vinculativa. Os resultados devem ser avaliados por um profissional de saúde. Essa avaliação deve ter em conta o teu historial clínico, sintomas, medicação e restantes exames.';
+const healthMedication='Não alteres medicação, tratamento ou acompanhamento médico com base apenas nesta interpretação.';
+const healthReference='Os intervalos de referência variam entre laboratórios e dependem da idade, sexo, contexto clínico e método utilizado.';
+const healthContext='O significado clínico depende do restante relatório e do contexto da pessoa.';
+const healthUrgency='Este protótipo não avalia sintomas nem identifica urgências. Se estás a sentir-te mal ou tens sintomas intensos ou súbitos, procura assistência médica urgente. Um valor fora do intervalo, por si só, não determina a urgência.';
+const healthNext='Um resultado isolado não permite determinar a causa. Mostra o resultado ao profissional de saúde que pediu o exame, que poderá interpretá-lo juntamente com outros resultados e com o teu contexto clínico.';
+const healthExamples={
+ laboratorio:{title:'Análises de rotina — exemplo fictício',summary:'Um valor dentro da referência do exemplo; dois acima.',reference:healthReference,next:'Leva os resultados ao profissional de saúde que pediu as análises, especialmente se tens sintomas, outras alterações ou exames anteriores para comparar.',final:'A glicose e o colesterol total aparecem acima das referências do exemplo e podem merecer confirmação ou discussão com um profissional de saúde.',parameters:[
+ {name:'Hemoglobina',value:'13,8 g/dL',reference:'13,0–17,0 g/dL',status:'Dentro da referência',tone:'within',shows:'O valor encontra-se dentro do intervalo de referência apresentado neste exemplo.',simple:'A hemoglobina ajuda a transportar oxigénio no sangue.',limits:'Um valor isolado não resume o estado geral de saúde.',questions:['É preciso comparar com análises anteriores?','Como se relaciona com os restantes resultados?']},
+ {name:'Glicose',value:'112 mg/dL',reference:'70–99 mg/dL',status:'Acima da referência do exemplo',tone:'above',shows:'O valor apresentado está acima da referência do exemplo.',simple:'A glicose medida aparece um pouco acima do intervalo mostrado pelo laboratório de exemplo. Este resultado pode depender de fatores como jejum, contexto clínico e outros resultados.',limits:'Um valor isolado não permite saber a causa nem fazer um diagnóstico.',questions:['Este resultado precisa de ser repetido?','Foi feito em jejum?','É preciso comparar com análises anteriores?']},
+ {name:'Colesterol total',value:'218 mg/dL',reference:'< 200 mg/dL',status:'Acima da referência do exemplo',tone:'above',shows:'O valor aparece acima da referência apresentada no exemplo.',simple:'O colesterol total deve ser interpretado juntamente com outros valores, como HDL, LDL e triglicéridos, além do contexto clínico.',limits:'O colesterol total isolado não permite determinar um diagnóstico ou o risco clínico individual.',questions:['Como se relaciona com HDL, LDL e triglicéridos?','É necessário comparar com resultados anteriores?']}]},
+ pleural:{title:'Termo de relatório — exemplo fictício',summary:'',reference:'O significado clínico depende do relatório completo e do contexto da pessoa.',next:healthNext,parameters:[{name:'Frase original',value:'Sem sinais de derrame pleural.',shows:'Derrame pleural é o nome dado à presença de líquido nesse espaço.',simple:'Este exame não descreve sinais de acumulação de líquido no espaço à volta dos pulmões.',limits:'Esta frase isolada não significa que todo o exame esteja normal nem permite avaliar o estado geral dos pulmões.',questions:['O restante exame está normal?','Há outros achados importantes no relatório?','Preciso de acompanhamento?']}]},
+ esteatose:{title:'Termo de relatório — exemplo fictício',summary:'',reference:'O significado clínico depende do relatório completo e do contexto da pessoa.',next:healthNext,parameters:[{name:'Frase original',value:'Esteatose hepática ligeira.',shows:'Esteatose hepática refere-se a acumulação de gordura no fígado; neste excerto, é descrita como ligeira.',simple:'Este termo indica que o relatório descreve uma pequena acumulação de gordura no fígado.',limits:'O termo, por si só, não permite determinar a causa, gravidade global ou necessidade de tratamento.',questions:['Este achado precisa de acompanhamento?','É necessário fazer análises adicionais?','Há outros achados importantes no relatório?']}]} 
+};
+const healthState={example:null,ready:false,saved:false};
+function healthNode(tag,className,text){const node=document.createElement(tag);node.className=className;node.textContent=text;return node;}
+function fillHealthSafety(node){node.replaceChildren(healthNode('h3','','Informação explicativa — avaliação profissional necessária'),healthNode('p','',healthSafety),healthNode('p','',healthMedication));}
+function chooseHealth(){Object.assign(state,{scenario:'saude',action:null,price:null,intention:null,saved:false,draft:null});Object.assign(healthState,{example:null,ready:false,saved:false});trackEvent('scenario_selected');trackEvent('health_section_opened');go('health');}
+function chooseHealthExample(example){
+ if(!Object.hasOwn(healthExamples,example))return;
+ Object.assign(healthState,{example,ready:false,saved:false});const d=healthExamples[example];
+ $('healthDocumentTitle').textContent=d.title;$('healthReferenceNote').textContent=d.reference;$('healthDocument').replaceChildren();
+ if(example==='laboratorio'){
+  const table=healthNode('table','health-table','');table.append(healthNode('caption','','Laboratório fictício · valores apenas para demonstração visual'));
+  const head=healthNode('thead','',''),row=healthNode('tr','','');for(const title of ['Parâmetro','Resultado','Referência do exemplo']){const th=healthNode('th','',title);th.setAttribute('scope','col');row.append(th);}head.append(row);table.append(head);
+  const body=healthNode('tbody','','');d.parameters.forEach(p=>{const tr=healthNode('tr','',''),th=healthNode('th','',p.name);th.setAttribute('scope','row');tr.append(th,healthNode('td','',p.value),healthNode('td','',p.reference));body.append(tr);});table.append(body);$('healthDocument').append(table);
+ }else{$('healthDocument').append(healthNode('p','small','Excerto de relatório fictício, sem dados de qualquer pessoa'),healthNode('blockquote','',d.parameters[0].value));}
+ $('healthCopyStatus').textContent='';trackEvent('health_example_selected');go('healthPreview');
+}
+function analyseHealth(){
+ if(!Object.hasOwn(healthExamples,healthState.example))return;
+ healthState.ready=false;go('healthAnalysis');trackEvent('analysis_started');$('healthAnalysisStep').textContent='A ler o exemplo fictício…';
+ timers.push(setTimeout(()=>$('healthAnalysisStep').textContent='A organizar a informação do exemplo…',650));
+ timers.push(setTimeout(()=>$('healthAnalysisStep').textContent='A preparar a explicação em linguagem simples…',1300));
+ timers.push(setTimeout(()=>{renderHealthResult();healthState.ready=true;trackEvent('analysis_completed');go('healthResult');},2300));
+}
+function healthText(example){
+ const d=healthExamples[example],lab=example==='laboratorio';
+ const lines=['Explicação informativa — não substitui avaliação profissional.','SAÚDE — DEMONSTRAÇÃO FICTÍCIA',d.title];
+ if(d.summary)lines.push(d.summary);lines.push(d.reference);
+ for(const p of d.parameters){lines.push(p.name+': '+p.value);if(p.reference)lines.push('Referência do exemplo: '+p.reference,p.status);
+ lines.push(lab?'O que o documento mostra':'O que significa',p.shows,'Em linguagem simples',p.simple,'O que não podemos concluir',p.limits,'O que podes perguntar ao profissional de saúde',...p.questions);}
+ if(d.final)lines.push('Resumo final',d.final);lines.push('Próximo passo',d.next,healthUrgency,healthSafety,healthMedication,'Esta interpretação é apenas informativa e não é vinculativa. Deve ser confirmada por um profissional de saúde.');return lines.join('\n\n');
+}
+function toggleHealthPanel(button){
+ const panel=$(button.getAttribute('aria-controls')),expanded=button.getAttribute('aria-expanded')==='true';
+ button.setAttribute('aria-expanded',String(!expanded));panel.hidden=expanded;
+}
+function renderHealthResult(){
+ const d=healthExamples[healthState.example],lab=healthState.example==='laboratorio';
+ $('healthResultTitle').textContent=lab?'Resumo das análises':'Resumo simples';$('healthSummary').textContent=d.summary;$('healthSummary').hidden=!lab;
+ $('healthResultReference').textContent=d.reference;$('healthFinal').hidden=!lab;$('healthFinalSummary').textContent=d.final||'';$('healthFinalStep').textContent=d.next;
+ $('healthUrgency').textContent='Se tens sintomas intensos ou súbitos, procura assistência médica urgente. Este protótipo não avalia sintomas nem identifica urgências.';
+ $('healthParameters').replaceChildren(...d.parameters.map((p,i)=>{
+ const card=healthNode('article','health-parameter',''),heading=healthNode('h3','',''),button=healthNode('button','health-accordion','');button.type='button';button.id='healthParameterToggle'+i;button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','healthParameterPanel'+i);
+ button.append(healthNode('span','health-parameter-title',lab?p.name+' — '+p.value:p.value));
+ if(p.status)button.append(healthNode('span','badge range-'+p.tone,p.status));button.append(healthNode('span','health-expand-label','Ver detalhes'));button.onclick=()=>toggleHealthPanel(button);heading.append(button);card.append(heading);
+ if(!lab){card.append(healthNode('h4','','Em linguagem simples'),healthNode('p','',p.simple),healthNode('h4','','O que não podemos concluir'),healthNode('p','',p.limits));}
+ const panel=healthNode('div','health-detail','');panel.id='healthParameterPanel'+i;panel.hidden=true;panel.setAttribute('role','region');panel.setAttribute('aria-labelledby',button.id);
+ const sections=lab?[['O que o documento mostra',p.shows+' Referência: '+p.reference+'.'],['Em linguagem simples',p.simple],['O que não podemos concluir',p.limits]]:[['O que significa',p.shows]];
+ for(const [label,value] of sections)panel.append(healthNode('h4','',label),healthNode('p','',value));
+ panel.append(healthNode('h4','','O que podes perguntar ao profissional de saúde'));const questions=healthNode('ul','health-questions','');questions.append(...p.questions.map(q=>healthNode('li','',q)));panel.append(questions);card.append(panel);return card;
+ }));
+ $('healthCopyPanel').hidden=true;$('healthCopyToggle').setAttribute('aria-expanded','false');$('healthCopyText').value=healthText(healthState.example);$('healthCopyStatus').textContent='';
+ trackEvent(lab?'health_lab_result_opened':'health_report_term_opened');
+}
+async function copyHealthSummary(){
+ if(!healthState.ready)return;
+ // Rebuild from fixed content so all programmatic copies include the safeguards.
+ const copied=await copyText(healthText(healthState.example),'healthCopyButton');
+ $('healthCopyStatus').textContent=copied?'Texto copiado.':'Não foi possível copiar automaticamente. Seleciona a explicação completa acima, incluindo as salvaguardas, e copia manualmente.';
+ if(copied)trackEvent('health_explanation_copied');
+ else{$('healthCopyPanel').hidden=false;$('healthCopyToggle').setAttribute('aria-expanded','true');$('healthCopyText').focus();}
+}
+function saveHealthExample(){
+ if(!healthState.ready)return;
+ if(!healthState.saved){
+ // Save only a fixed example identifier and safeguards, never a medical document or input.
+ const entry={title:healthState.example==='laboratorio'?'Saúde — análises de rotina (exemplo)':'Saúde — '+healthExamples[healthState.example].parameters[0].value+' (exemplo)',scenario:'saude',example:healthState.example,status:'Resumo informativo preparado',timestamp:new Date().toISOString(),body:healthSafety+'\n\n'+healthMedication};
+ writeList(keys.cases,[entry,...readList(keys.cases)].slice(0,8));healthState.saved=true;trackEvent('case_saved');
+ }go('healthSaved');
+}
+function cancelAnalysis(){timers.forEach(clearTimeout);timers=[];}
 function go(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  cancelAnalysis();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+  if(id==='history')renderHistory();
+  if(id==='pricing')trackEvent('pricing_viewed');
+  const target=$(id); target.tabIndex=-1; target.focus({preventScroll:true}); window.scrollTo(0,0);
 }
+function startPrototype(){trackEvent('start_demo');go('scenarios');}
+function startExample(s){trackEvent('start_demo');choose(s);}
 function choose(s){
-  scenario=s; const d=data[s];
-  document.getElementById('fakeBrand').textContent=d.brand;
-  document.getElementById('docTitle').textContent=d.docTitle;
-  document.getElementById('docText').textContent=d.docText;
-  go('capture');
+ Object.assign(state,{scenario:s,action:null,price:null,intention:null,saved:false,draft:null});
+ const d=data[s]; $('fakeBrand').textContent=d.brand; $('docTitle').textContent=d.docTitle; $('docText').textContent=d.docText;
+ trackEvent('scenario_selected');go('capture');
 }
-function analyse(){ go('analyse'); setTimeout(()=>{ renderResult(); go('result'); },1800); }
+function analyse(){
+ go('analyse');trackEvent('analysis_started');$('analysisStep').textContent='A ler o documento…';
+ timers.push(setTimeout(()=>$('analysisStep').textContent='A identificar o problema…',600));
+ timers.push(setTimeout(()=>$('analysisStep').textContent='A verificar possíveis opções…',1200));
+ timers.push(setTimeout(()=>$('analysisStep').textContent='A preparar os próximos passos…',1800));
+ timers.push(setTimeout(()=>{renderResult();trackEvent('analysis_completed');go('result');},2500));
+}
 function renderResult(){
-  const d=data[scenario];
-  what.textContent=d.what; meaning.textContent=d.meaning; need.textContent=d.need;
-  actionList.innerHTML=d.actions.map((a,i)=>`<div class="action ${i===1?'sel':''}" onclick="selectAction(this)"><b>${a[0]} ${a[1]}</b><div class="muted">${a[2]}</div></div>`).join('');
-  to.value=d.to; subject.value=d.subject; attachment.textContent=d.attachment; mailbody.textContent=d.body;
+ const d=data[state.scenario];$('what').textContent=d.what;$('meaning').textContent=d.meaning;$('need').textContent=d.need;$('nextStep').textContent=d.next;
+ $('sourceList').replaceChildren(...officialSources[state.scenario].map(([label,url])=>{const a=document.createElement('a');a.textContent=label+' ↗';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',()=>trackEvent('source_link_clicked'));return a;}));
+ $('actionList').replaceChildren(...actionVariants[state.scenario].map((a,i)=>{const button=document.createElement('button');button.className='action';button.setAttribute('aria-pressed',String(state.action===i));const title=document.createElement('b');title.textContent=a.label;const description=document.createElement('div');description.className='muted';description.textContent=a.description;button.append(title,description);button.onclick=()=>selectAction(i);button.classList.toggle('sel',state.action===i);return button;}));
+ $('actionContinue').disabled=state.action===null;
 }
-function selectAction(el){ document.querySelectorAll('.action').forEach(a=>a.classList.remove('sel')); el.classList.add('sel'); }
-function pickPrice(el,p){
-  document.querySelectorAll('.price').forEach(x=>x.classList.remove('sel')); el.classList.add('sel');
-  selectedPrice=p; document.getElementById('chosenPrice').textContent=p;
+function selectAction(index){if(state.action!==index)state.draft=null;state.action=index;state.saved=false;trackEvent('action_selected');document.querySelectorAll('.action').forEach((el,i)=>{el.classList.toggle('sel',i===index);el.setAttribute('aria-pressed',String(i===index));});$('actionContinue').disabled=false;}
+function communication(){if(state.draft)return state.draft;const a=actionVariants[state.scenario][state.action];return {subject:a.subject,body:'Exmos. Senhores,\n\n'+a.text+'\n\nAguardo a vossa resposta.\n\nCom os melhores cumprimentos,\n[O teu nome]'};}
+function showCommunication(){if(state.action===null)return;const c=communication();$('to').value=data[state.scenario].to;$('subject').value=c.subject;$('mailbody').value=c.body;$('copyStatus').textContent='';go('draft');trackEvent('communication_prepared');}
+function editCommunication(){state.draft={subject:$('subject').value,body:$('mailbody').value};state.saved=false;$('copyStatus').textContent='';}
+async function copyCommunication(){
+ const c=communication(), text='Assunto: '+c.subject+'\n\n'+c.body;
+ const copied=await copyText(text,'copyButton');
+ $('copyStatus').textContent=copied?'Texto copiado.':'Não foi possível copiar automaticamente. Seleciona o texto acima e copia manualmente.';
+ if(copied)trackEvent('communication_copied');
 }
-function intent(){ document.getElementById('intentModal').classList.add('show'); }
-function closeModal(){ document.getElementById('intentModal').classList.remove('show'); }
+async function copyText(text,buttonId){
+ let copied=false;
+ try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);copied=true;}}catch{}
+ if(!copied){const field=document.createElement('textarea');field.value=text;field.style.position='fixed';field.style.opacity='0';document.body.append(field);field.select();try{copied=document.execCommand('copy');}catch{}field.remove();$(buttonId).focus();}
+ return copied;
+}
+function intent(price){
+ state.price=price;state.intention=null;trackEvent('price_clicked');$('intentTitle').textContent='A tua opinião conta';$('intentIntro').textContent='Estamos a testar o RESOLVE antes do lançamento.';
+ $('feedbackForm').reset();updateCounter();$('feedbackForm').classList.remove('hidden');$('feedbackDone').classList.add('hidden');$('intentPrice').textContent=price;
+ modalTrigger=document.activeElement;document.querySelector('.app').inert=true;$('intentModal').classList.add('show');$('intentModal').querySelector('button').focus();
+}
+function closeModal(){ $('intentModal').classList.remove('show');document.querySelector('.app').inert=false;if(modalTrigger)modalTrigger.focus(); }
+function selectIntent(value){state.intention=value;trackEvent('purchase_intent',{intention:value});}
+function updateCounter(){$('commentCount').textContent=$('comment').value.length+'/200';}
+function submitFeedback(event){
+ event.preventDefault();if(!state.intention||!$('reason').value)return;
+ const reason=$('reason').value, comment=$('comment').value.trim().slice(0,200);
+ writeList(keys.feedback,[...readList(keys.feedback),{scenario:state.scenario,action:actionVariants[state.scenario][state.action].label,price:state.price,intention:state.intention,reason,comment,timestamp:new Date().toISOString()}].slice(-100));
+ trackEvent('feedback_submitted',{intention:state.intention,reason,hasComment:!!comment});$('intentTitle').textContent='Feedback registado';$('intentIntro').textContent='Obrigado. Esta resposta ajuda-nos a perceber se o RESOLVE teria utilidade num problema real.';$('comment').value='';$('feedbackForm').classList.add('hidden');$('feedbackDone').classList.remove('hidden');$('feedbackDone').querySelector('button').focus();
+}
 function confirmSave(){
-  closeModal();
-  let cases=JSON.parse(localStorage.getItem('resolveCases')||'[]');
-  cases.unshift({title:data[scenario].history,status:'A aguardar resposta',price:selectedPrice,date:new Date().toLocaleDateString('pt-PT')});
-  localStorage.setItem('resolveCases',JSON.stringify(cases.slice(0,8)));
-  renderHistory(); go('saved');
+ if(state.action===null)return;closeModal();
+ if(!state.saved){const c=communication();const entry={title:data[state.scenario].history,scenario:state.scenario,action:actionVariants[state.scenario][state.action].label,status:'Comunicação preparada',price:state.price,timestamp:new Date().toISOString(),subject:c.subject,body:c.body};writeList(keys.cases,[entry,...readList(keys.cases)].slice(0,8));state.saved=true;trackEvent('case_saved');}
+ go('saved');
 }
 function renderHistory(){
-  let cases=JSON.parse(localStorage.getItem('resolveCases')||'[]');
-  if(!cases.length){
-    cases=[
-      {title:'Operadora — aumento de mensalidade',status:'A aguardar resposta',date:'04/09/2026'},
-      {title:'Loja — produto avariado',status:'Em curso',date:'28/08/2026'},
-      {title:'Energia — fatura incorreta',status:'Resolvido',date:'12/08/2026'}
-    ];
-  }
-  historyList.innerHTML=cases.map(c=>`<div class="case"><div class="casehead"><div><b>${c.title}</b><div class="muted">Atualizado: ${c.date}</div></div><span>›</span></div><p><span class="badge">${c.status}</span></p>${c.price?`<div class="small">Plano escolhido: ${c.price}</div>`:''}</div>`).join('');
+ const cases=readList(keys.cases).filter(c=>c&&typeof c.title==='string'&&typeof c.body==='string'&&(c.scenario!=='saude'||Object.hasOwn(healthExamples,c.example)));$('historyList').replaceChildren();
+ if(!cases.length){const p=document.createElement('p');p.className='card soft';p.textContent='Ainda não guardaste nenhum caso. Experimenta um exemplo para veres aqui a comunicação preparada.';$('historyList').append(p);return;}
+ cases.slice(0,8).forEach(c=>{
+ const el=(tag,cls,text)=>{const node=document.createElement(tag);node.className=cls;node.textContent=text;return node;};
+ const date=new Date(c.timestamp);const dateText=Number.isNaN(date.getTime())?'Data indisponível':date.toLocaleDateString('pt-PT');
+ const details=el('details','case',''),summary=el('summary','','');
+ const isHealth=c.scenario==='saude',status=isHealth?'Resumo informativo preparado':'Comunicação preparada';
+ summary.append(el('span','case-title',c.title),el('span','badge',status),el('span','case-date',dateText));details.append(summary);
+ if(isHealth){
+  const safety=el('div','health-safety','');fillHealthSafety(safety);
+  details.append(safety,el('p','small','Apenas o exemplo fictício está guardado neste navegador. Nenhum documento médico foi guardado ou enviado.'),el('p','history-body',healthText(c.example)));
+  details.addEventListener('toggle',()=>{if(details.open)trackEvent('case_opened');});$('historyList').append(details);return;
+ }
+ const meta=el('dl','case-meta','');
+ for(const [label,value] of [['Estado','Comunicação preparada'],['Ação escolhida',c.action||'Não registada'],['Plano testado',c.price?(c.price==='3,99 €'?'RESOLVE+':'RESOLVE')+' — '+c.price:'Apenas o exemplo'],['Data',dateText]]){const row=el('div','','');row.append(el('dt','',label),el('dd','',value));meta.append(row);}
+ const mail=el('div','history-mail','');mail.append(el('h3','','Comunicação preparada'),el('p','history-subject',c.subject||'Sem assunto'),el('p','history-body',c.body));
+ details.append(meta,mail,el('p','small','Exemplo guardado neste navegador. Nenhuma comunicação foi enviada.'));
+ details.addEventListener('toggle',()=>{if(details.open)trackEvent('case_opened');});$('historyList').append(details);
+ });
 }
-renderHistory();
-</script>
+$('intentModal').addEventListener('keydown',event=>{if(event.key==='Escape'){closeModal();return;}if(event.key!=='Tab')return;const nodes=[...$('intentModal').querySelectorAll('button,input,select,textarea')].filter(el=>el.getClientRects().length&&!el.disabled);const first=nodes[0],last=nodes[nodes.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}});
+window.addEventListener('popstate',()=>{closeModal();go('home');});
+window.addEventListener('pagehide',cancelAnalysis);
+document.querySelectorAll('.iconbtn').forEach(button=>{if(!button.hasAttribute('aria-label'))button.setAttribute('aria-label','Voltar');});
+['healthIntroSafety','healthBeforeSafety','healthResultSafety','healthSavedSafety'].forEach(id=>fillHealthSafety($(id)));
+trackEvent('app_open');renderHistory();</script>
 </body>
 </html>
+
+
