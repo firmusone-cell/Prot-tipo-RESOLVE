@@ -84,8 +84,24 @@ html,body{background:#f2f6f4}body{padding:24px 16px}.app{max-width:760px;box-sha
 @media(min-width:720px){#home .pills{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:340px){#home .pills{grid-template-columns:minmax(0,1fr)}}
 </style>
+<style>
+.analytics-banner{width:min(440px,100%);margin:auto;padding:14px 18px;background:var(--soft);border-bottom:1px solid var(--line)}
+.analytics-banner[hidden]{display:none}
+.analytics-banner p{font-size:13px;line-height:1.45;margin:6px 0}
+.analytics-banner .btn{font-size:13px;padding:10px;margin:4px 0}
+.analytics-settings{display:block;margin:12px auto;padding:10px;background:#fff;border:1px solid var(--line);border-radius:8px;color:var(--text);cursor:pointer}
+.analytics-banner button:focus-visible,.analytics-settings:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+</style>
 </head>
 <body>
+<aside id="analyticsBanner" class="analytics-banner" aria-labelledby="analyticsTitle" hidden>
+<strong id="analyticsTitle">Ajuda-nos a melhorar o RESOLVE</strong>
+<p>Usamos medição anónima para perceber que partes do protótipo são mais úteis. Nunca enviamos documentos, resultados médicos, comentários ou dados pessoais para o Analytics.</p>
+<button id="analyticsAccept" type="button" class="btn secondary" onclick="setAnalyticsConsent('granted')">Aceitar medição</button>
+<button type="button" class="btn secondary" onclick="setAnalyticsConsent('denied')">Continuar sem medição</button>
+<p>Podes usar o RESOLVE normalmente sem aceitar.</p>
+</aside>
+<button id="analyticsSettings" type="button" class="analytics-settings" onclick="showAnalyticsConsent()">Preferências de medição</button>
 <div id="storageNotice" class="notice hidden" role="status"></div><main class="app">
 
 <section id="home" class="screen active"><div class="top"><div class="brand"><div class="logo" aria-hidden="true">✓</div>RESOLVE</div><span class="small">Demonstração · V2.2</span></div><div class="hero"><span class="step">O teu próximo passo, mais claro</span><h1>Recebeste algo e não sabes o que fazer?<br><strong>Mostra-nos.</strong></h1><p>Uma explicação simples, opções para responder e um próximo passo mais claro. Experimenta com um exemplo, sem upload real.</p></div><button class="btn primary" onclick="startPrototype()">Experimentar grátis →</button><p class="small">Vais experimentar com um documento de exemplo. Não precisas de enviar dados pessoais.</p><div class="card soft"><h3>Uma ajuda para situações do dia a dia</h3><div class="pills"><button class="pill" onclick="startExample('cobranca')"><span aria-hidden="true">▤</span> Fatura inesperada →</button><button class="pill" onclick="startExample('produto')"><span aria-hidden="true">◇</span> Produto com problema →</button><button class="pill" onclick="startExample('telecom')"><span aria-hidden="true">↻</span> Alteração de contrato →</button><button class="pill" type="button" onclick="chooseHealth();trackEvent('home_health_clicked')"><span aria-hidden="true">✚</span> Saúde<small>Perceber análises e relatórios médicos</small></button></div></div><p class="small">Protótipo de demonstração — não envies dados pessoais reais.</p><nav class="bottom" aria-label="Navegação principal"><button class="nav" onclick="go('home')">Início</button><button class="nav" onclick="go('history')">O meu caso</button></nav></section>
@@ -227,6 +243,63 @@ html,body{background:#f2f6f4}body{padding:24px 16px}.app{max-width:760px;box-sha
 <p><label for="comment">Queres deixar algum comentário? <span class="small">(opcional)</span></label><textarea id="comment" maxlength="200" aria-describedby="commentHelp commentCount" oninput="updateCounter()"></textarea><span id="commentCount" class="small">0/200</span><br><span id="commentHelp" class="small">Não incluas nomes, contactos ou outros dados pessoais. O comentário fica apenas neste navegador.</span></p><button class="btn primary" type="submit">Enviar feedback</button></form>
 <div id="feedbackDone" class="hidden" role="status"><p class="feedback-done">Queres guardar este caso de demonstração?</p><button class="btn primary" onclick="confirmSave()">Guardar caso</button></div></div></div>
 <script>
+// Never send personal, medical, document, communication or free-text data to analytics.
+const analyticsId='G-BWM3DBN9KC', analyticsConsentKey='resolveAnalyticsConsentV1';
+window.dataLayer=window.dataLayer||[];
+function gtag(){window.dataLayer.push(arguments);}
+const deniedConsent={analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'};
+gtag('consent','default',deniedConsent);
+let analyticsConsent='denied',analyticsLoaded=false,analyticsOpened=false;
+const analyticsEvents=new Set(['app_open','start_demo','prototype_start','scenario_selected','analysis_started','analysis_completed','action_selected','communication_prepared','communication_copied','pricing_viewed','price_clicked','purchase_intent','feedback_submitted','case_saved','case_opened','home_health_clicked','health_section_opened','health_lab_result_opened','health_report_term_opened','source_link_clicked']);
+function sanitizeAnalyticsData(eventName,data={}){
+ const safe={};
+ if(!analyticsEvents.has(eventName)||!data||typeof data!=='object')return safe;
+ // Health navigation and history opens carry no state or saved-case metadata.
+ if(eventName.startsWith('health_')||eventName==='home_health_clicked'||eventName==='case_opened'||data.scenario==='saude'||data.scenario==='health')return safe;
+ const scenarios={telecom:'telecom',produto:'product',cobranca:'billing'};
+ if(['scenario_selected','analysis_started','analysis_completed','action_selected','communication_prepared','communication_copied','case_saved','source_link_clicked'].includes(eventName)&&Object.hasOwn(scenarios,data.scenario))safe.scenario=scenarios[data.scenario];
+ if(['action_selected','communication_prepared','communication_copied'].includes(eventName)&&safe.scenario&&(data.action===0||data.action===1))safe.action=data.scenario==='produto'?['repair_replace','clarify'][data.action]:['clarify','contest'][data.action];
+ if(['price_clicked','purchase_intent','feedback_submitted'].includes(eventName)){
+  if(data.price==='1,49 €'){safe.plan='resolve';safe.price=1.49;}
+  if(data.price==='3,99 €'){safe.plan='resolve_plus';safe.price=3.99;}
+ }
+ if(['purchase_intent','feedback_submitted'].includes(eventName)&&['yes','maybe','no'].includes(data.intention))safe.intent=data.intention;
+ // All output strings are fixed literals under 32 characters; no free text is copied.
+ return safe;
+}
+function sendAnalyticsEvent(eventName,data={}){
+ if(analyticsConsent!=='granted'||!analyticsLoaded||!analyticsEvents.has(eventName))return;
+ if(eventName==='app_open'){if(analyticsOpened)return;analyticsOpened=true;}
+ gtag('event',eventName,sanitizeAnalyticsData(eventName,data));
+}
+function activateAnalytics(){
+ window['ga-disable-'+analyticsId]=false;
+ gtag('consent','update',{...deniedConsent,analytics_storage:'granted'});
+ if(!analyticsLoaded){
+  analyticsLoaded=true;
+  const tag=document.createElement('script');tag.async=true;tag.src='https://www.googletagmanager.com/gtag/js?id='+analyticsId;
+  document.head.append(tag);
+  gtag('js',new Date());
+  // Fixed page metadata excludes URL queries, fragments, referrers and document content.
+  // Disable Enhanced Measurement and user-provided data collection in the GA4 stream too.
+  gtag('config',analyticsId,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:'https://resolve.invalid/',page_referrer:'',page_title:'RESOLVE prototype',ignore_referrer:true});
+ }
+}
+function setAnalyticsConsent(choice){
+ if(!['granted','denied'].includes(choice))return;
+ analyticsConsent=choice;
+ try{localStorage.setItem(analyticsConsentKey,choice);}catch{/* Choice remains valid for this page session. */}
+ if(choice==='granted'){activateAnalytics();sendAnalyticsEvent('app_open');}
+ else{window['ga-disable-'+analyticsId]=true;gtag('consent','update',deniedConsent);}
+ $('analyticsBanner').hidden=true;$('analyticsSettings').focus();
+}
+function showAnalyticsConsent(){$('analyticsBanner').hidden=false;$('analyticsAccept').focus();}
+function initAnalytics(){
+ let saved=null;try{saved=localStorage.getItem(analyticsConsentKey);}catch{}
+ $('analyticsBanner').hidden=['granted','denied'].includes(saved);
+ if(saved==='granted'){analyticsConsent='granted';activateAnalytics();}
+ else window['ga-disable-'+analyticsId]=true;
+}
 const data = {
   telecom:{
     brand:'Operadora',
@@ -281,6 +354,7 @@ function trackEvent(eventName,details={}){
   for(const key of ['intention','reason','hasComment']) if(key in details) metadata[key]=details[key];
   const entry={event:eventName,data:metadata,timestamp:new Date().toISOString()};
   console.info('[RESOLVE]',entry); writeList(keys.events,[...readList(keys.events),entry].slice(-500));
+  try{sendAnalyticsEvent(eventName,metadata);}catch{/* Analytics must never interrupt local tracking or prototype flows. */}
 }
 const actionVariants={
  telecom:[
@@ -470,7 +544,7 @@ window.addEventListener('popstate',()=>{closeModal();go('home');});
 window.addEventListener('pagehide',cancelAnalysis);
 document.querySelectorAll('.iconbtn').forEach(button=>{if(!button.hasAttribute('aria-label'))button.setAttribute('aria-label','Voltar');});
 ['healthIntroSafety','healthBeforeSafety','healthResultSafety','healthSavedSafety'].forEach(id=>fillHealthSafety($(id)));
-trackEvent('app_open');renderHistory();</script>
+initAnalytics();trackEvent('app_open');renderHistory();</script>
 </body>
 </html>
 
